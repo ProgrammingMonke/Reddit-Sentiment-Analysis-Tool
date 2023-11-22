@@ -1,0 +1,4 @@
+praw
+dotenv
+python-dotenv
+random
