@@ -5,7 +5,11 @@ from dotenv import dotenv_values
 secrets = dotenv_values(".env")
 
 
-def get_reddit_titles():
+def get_titles():
+    """
+    Appends 33 reddit titles from 3 different subreddits into a list.
+    Returns a scrambled version of the list.
+    """
     reddit = praw.Reddit(client_id = secrets["CLIENT_ID"],
                         client_secret = secrets["CLIENT_SECRET"],
                         uesrname = secrets["USERNAME"],
