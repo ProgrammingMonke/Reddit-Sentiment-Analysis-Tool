@@ -1,3 +1,3 @@
-# MongoDB API and Reddit Scraper
-## How to run
-1) While inside the API directory, type ``python3 -m pip install -r requirements.txt``
+# Reddit-Sentiment-Analysis-Tool
+
+To see how to set up classifier, go to the README.md within the UI folder
