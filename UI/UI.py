@@ -29,7 +29,7 @@ class TextClassifierApp:
         """ 
         self.clear_screen()
 
-        welcome_label = tk.Label(self.master, text="Welcome to Title Classifier!\nYou will receive different Reddit post titles and you must classify them based on bias. ", font=('Helvetica', 20))
+        welcome_label = tk.Label(self.master, text="Welcome to Title Classifier!\nYou will receive different Reddit post titles and you must classify them based on bias. ", font=('Helvetica', 20), wraplength=600)
         welcome_label.pack(pady=20)
 
         start_button = tk.Button(self.master, text="Start Labeling", command=self.start_labeling)
@@ -65,7 +65,7 @@ class TextClassifierApp:
         if self.titles:
             title = self.titles.pop()
 
-            text_label = tk.Label(self.master, text=title, font=('Helvetica', 20),wraplength=400)
+            text_label = tk.Label(self.master, text=title, font=('Helvetica', 20), wraplength=600)
             text_label.pack(pady=20)
 
             undo_button = tk.Button(self.master, text="Undo Last Choice", command=self.undo, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
@@ -74,19 +74,19 @@ class TextClassifierApp:
             button_frame = tk.Frame(self.master)
             button_frame.pack(side="bottom", pady=10)
 
-            option1_button = tk.Button(button_frame, text="Israel Bias", command=lambda: self.uploadTitle(-1,title), width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+            option1_button = tk.Button(button_frame, text="Israel Bias", command=lambda: self.uploadTitle(-1, title), width=BUTTON_WIDTH, height=BUTTON_HEIGHT, bg="#005EB8")
             option1_button.pack(side="left",padx=20)
 
-            option2_button = tk.Button(button_frame, text="Palestine Bias", command=lambda: self.uploadTitle(1,title), width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+            option2_button = tk.Button(button_frame, text="Palestine Bias", command=lambda: self.uploadTitle(1, title), width=BUTTON_WIDTH, height=BUTTON_HEIGHT, bg="#009736")
             option2_button.pack(side="left",padx=20)
 
-            neither_button = tk.Button(button_frame, text="Neither", command=lambda: self.uploadTitle(0,title), width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+            neither_button = tk.Button(button_frame, text="Neither", command=lambda: self.uploadTitle(0, title), width=BUTTON_WIDTH, height=BUTTON_HEIGHT, bg="#8D8D8D")
             neither_button.pack(side="left",padx=20)
 
-            skip_button = tk.Button(button_frame, text="N/A", command=self.next_text, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+            skip_button = tk.Button(button_frame, text="N/A", command=self.next_text, width=BUTTON_WIDTH, height=BUTTON_HEIGHT, bg="#464646")
             skip_button.pack(side="left",padx=20)
 
-            quit_button = tk.Button(button_frame, text="Quit", command=self.quit_program, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+            quit_button = tk.Button(button_frame, text="Quit", command=self.quit_program, width=BUTTON_WIDTH, height=BUTTON_HEIGHT, bg="#FF0000")
             quit_button.pack(side="left",padx=20)
         
         else:
