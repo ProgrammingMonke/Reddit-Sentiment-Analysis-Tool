@@ -90,7 +90,7 @@ class TextClassifierApp:
             quit_button.pack(side="left",padx=20)
         
         else:
-            self.titles = api.get_reddit_titles()
+            self.titles = api.get_titles()
             self.next_text()
 
     def undo(self):
