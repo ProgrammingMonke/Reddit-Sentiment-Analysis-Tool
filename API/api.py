@@ -34,6 +34,10 @@ def upload_title(db, label: int, title: str) -> int:
     """ 
     collection = db['labeled_titles']
 
+    if collection.find_one({"title": title}):
+        print("Title already in database")
+        return 1
+
     # Upload a title with the corresponding label to the specified category
     try:
         collection.insert_one({"label": label, "title": title})
