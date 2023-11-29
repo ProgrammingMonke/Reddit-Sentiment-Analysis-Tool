@@ -25,8 +25,17 @@ class TextClassifierApp:
 
     def welcome_screen(self):
         """
+        Displays count of classifications from database in terminal
         Displays Welcome screen for user. Allows user to start classification
         """ 
+        count = api.get_db_count(self.db)
+        print("Title Classification Count:")
+        print("Israel:", count[0])
+        print("Neither:", count[1])
+        print("Palestine:", count[2])
+        print("Total:", count[0] + count[1] + count[2])
+
+
         self.clear_screen()
 
         welcome_label = tk.Label(self.master, text="Welcome to Title Classifier!\nYou will receive different Reddit post titles and you must classify them based on bias. ", font=('Helvetica', 20), wraplength=600)
@@ -54,7 +63,7 @@ class TextClassifierApp:
         Retrieves Reddit titles from Reddit API
         """ 
         self.clear_screen()
-        self.titles = api.get_titles()
+        self.titles = api.get_titles(self.db)
         self.display_text()
 
     def display_text(self):
@@ -90,7 +99,13 @@ class TextClassifierApp:
             quit_button.pack(side="left",padx=20)
         
         else:
-            self.titles = api.get_titles()
+            self.titles = api.get_titles(self.db)
+
+            # quit program if there's no more titles to classify
+            if not len(self.titles):
+                print("No more titles to classify at this time. Try again later!")
+                quit()
+
             self.next_text()
 
     def undo(self):

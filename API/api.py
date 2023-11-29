@@ -82,10 +82,17 @@ def get_db_count(db) -> List[int]:
     palestine_count = collection.count_documents({"label": 1})
     return [israel_count, neutral_count, palestine_count]
 
-def get_titles():
+def get_titles(db):
     """
-    Calls Reddit Scraper
+    Calls Reddit Scraper. Removes any titles already in the database.
 
-    :return: 99 titles from subreddits
+    :param db: database that the data is going to uploaded to
+    :return: unseen titles from subreddits
     """ 
-    return reddit_scraper.get_titles()
+    titles = reddit_scraper.get_titles()
+    collection = db['labeled_titles']
+
+    # Use list comprehension to filter out titles that already exist in the database
+    return_titles = [title for title in titles if not collection.find_one({"title": title})]
+
+    return return_titles
