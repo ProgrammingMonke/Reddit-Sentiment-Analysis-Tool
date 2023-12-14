@@ -3,6 +3,7 @@ from pymongo.server_api import ServerApi
 from typing import List
 from dotenv import dotenv_values
 import reddit_scraper
+import random
 
 secrets = dotenv_values(".env")
 
@@ -97,13 +98,40 @@ def get_titles(db):
 
     return return_titles
 
-def return_database_content(db):
+def return_database_content(db, training, testing, scramble):
     """
-    Returns all the data within the mongodb server
+    Returns all the data within the mongodb server and splits it up into training
+    and test data
 
     :param db: database that the data is going to uploaded to
-    :return: 
+    :param training: a number from 0-1 that specifies the amount of data needed for training
+    :param testing: a number from 0-1 that specifies the amount of data needed for training
+    :param scramble: if set to 1, split dataset randomly. If set to 0, training data will always be the first _% of database
+
+    :return: all data within the collection split into two jsons (size of jsons based on input)
     """ 
     collection = db['labeled_titles']
+    total_data = collection.find({}, {"title": 1, "label": 1, "_id": 0})
+    total_data = list(total_data)
 
-    return list(collection.find({}, {"title": 1, "label": 1, "_id": 0}))
+    if not 0 <= training <= 1:
+        print(training)
+        print("Training set must be between 0 and 1")
+        return [{}]
+    
+    if not 0 <= testing <= 1:
+        print("Testing set must be between 0 and 1")
+        return [{}]
+            
+    if training + testing != 1:
+        print("Testing and Training set must add together to equal 1")
+        return [{}]
+    
+    if scramble:
+        random.shuffle(total_data)
+
+    split_index = int(len(total_data) * training)
+    training_data = total_data[:split_index]
+    testing_data = total_data[split_index:]
+
+    return training_data, testing_data
