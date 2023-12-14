@@ -96,3 +96,14 @@ def get_titles(db):
     return_titles = [title for title in titles if not collection.find_one({"title": title})]
 
     return return_titles
+
+def return_database_content(db):
+    """
+    Returns all the data within the mongodb server
+
+    :param db: database that the data is going to uploaded to
+    :return: 
+    """ 
+    collection = db['labeled_titles']
+
+    return list(collection.find({}, {"title": 1, "label": 1, "_id": 0}))
