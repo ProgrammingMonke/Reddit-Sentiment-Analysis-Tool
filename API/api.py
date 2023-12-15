@@ -98,7 +98,7 @@ def get_titles(db):
 
     return return_titles
 
-def return_database_content(db, training, testing, scramble):
+def get_database_content(db, training, testing, scramble):
     """
     Returns all the data within the mongodb server and splits it up into training
     and test data
