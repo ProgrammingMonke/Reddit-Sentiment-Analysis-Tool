@@ -8,11 +8,18 @@ import random
 secrets = dotenv_values(".env")
 
 # Change it so that username and password is passed in
-def connect_to_db():
+def connect_to_db(DB_USERNAME:str = None, DB_PASSWORD:str = None):
     """
     Attempts to connect to mongodb cluster
+
+    :param DB_USERNAME: Username for DB (will read .env file if nothing is passed in)
+    :param DB_PASSWORD: Password for DB (will read .env file if nothing is passed in)
     """
-    uri = "mongodb+srv://" + secrets["DB_USERNAME"] + ":" + secrets["DB_PASSWORD"] + "@cluster0.wgtehoy.mongodb.net/?retryWrites=true&w=majority"
+
+    if (not DB_PASSWORD and not DB_PASSWORD):
+        uri = f"mongodb+srv://{secrets['DB_USERNAME']}:{secrets['DB_PASSWORD']}@cluster0.wgtehoy.mongodb.net/?retryWrites=true&w=majority"
+    else:
+        uri = f"mongodb+srv://{DB_USERNAME}:{DB_PASSWORD}@cluster0.wgtehoy.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(uri, server_api=ServerApi('1'))
 
     try:
